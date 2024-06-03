@@ -14,10 +14,9 @@ def forward_to_email(number, content, timestamp):
         message_body = 'Number: {}\nContent: {}\nTimestamp: {}'.format(
             number, content, timestamp)
         message = MIMEText(message_body, 'plain', 'utf-8')
-        message['From'] = formataddr(
-            (str(Header(config.email_from, 'utf-8')), config.email_user))
-        message['To'] = Header(config.email_to, 'utf-8')
-        message['Subject'] = Header(subject, 'utf-8')
+        message['From'] = formataddr((str(Header(config.email_from, 'utf-8')), config.email_user))
+        message['To'] = config.email_to
+        message['Subject'] = subject
 
         try:
             if config.email_enable_ssl:
@@ -27,7 +26,7 @@ def forward_to_email(number, content, timestamp):
             if config.email_enable_tls:
                 server.starttls()
             server.login(config.email_user, config.email_password)
-            server.sendmail(config.email_from, [
+            server.sendmail(config.email_user, [
                             config.email_to], message.as_string())
             logging.info('Forwarded to email')
         except Exception as e:
