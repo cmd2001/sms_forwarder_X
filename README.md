@@ -39,7 +39,8 @@ Description=SMS Forwarder
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/python3 /home/user/sms_forwarder/main.py
+ExecStartPre=/usr/bin/bash /root/sms_forwarder/switch_sim.sh
+ExecStart=/usr/bin/python3 /root/sms_forwarder/main.py
 
 [Install]
 WantedBy=multi-user.target
