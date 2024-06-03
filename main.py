@@ -46,7 +46,7 @@ def main():
         # save message
         if (config.save_messages):
             msg_save_content = json.dumps(
-                {"number": number, "content": content, "timestamp": timestamp})
+                {"number": number, "content": content, "timestamp": timestamp}, ensure_ascii=False)
             with open(config.save_messages_path, "a") as f:
                 f.write(msg_save_content+"\n")
 
